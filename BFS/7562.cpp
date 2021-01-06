@@ -3,7 +3,6 @@
 #include<queue>
 using namespace std;
 
-int testcase, length;
 vector<vector<bool> > visited;
 pair<int, int> Start, End;
 
@@ -11,6 +10,7 @@ int dx[8] = {2,2,1,1,-1,-1,-2,-2};
 int dy[8] = {1,-1,2,-2,2,-2,1,-1};
 
 int main(){    
+    int testcase, length;
     cin >> testcase;
     while (testcase--){
         cin >> length;
