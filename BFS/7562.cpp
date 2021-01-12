@@ -44,7 +44,6 @@ int main(){
                 }
             }
         }
-
         visited.clear();
     }
 }
