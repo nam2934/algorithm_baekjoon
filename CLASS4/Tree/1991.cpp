@@ -11,6 +11,27 @@ struct TreeNode {
 
 vector<TreeNode*> tree;
 
+void preorder(int i){
+    char result = (tree[i]->label +'A');
+    cout << result;
+    if(tree[i]->left != NULL) preorder(tree[i]->left->label);
+    if(tree[i]->right != NULL) preorder(tree[i]->right->label);
+}
+
+void inorder(int i){
+    char result = (tree[i]->label +'A');
+    if(tree[i]->left != NULL) inorder(tree[i]->left->label);
+    cout << result;
+    if(tree[i]->right != NULL) inorder(tree[i]->right->label);
+}
+
+void postorder(int i){
+    char result = (tree[i]->label +'A');
+    if(tree[i]->left != NULL) postorder(tree[i]->left->label);
+    if(tree[i]->right != NULL) postorder(tree[i]->right->label);
+    cout << result;
+}
+
 int main(){    
     int N;
     cin >> N;
@@ -21,14 +42,17 @@ int main(){
     for(int i=0; i<N; i++){
         char current_value, left_value, right_value;
         cin >> current_value >> left_value >> right_value;
-        tree[i]->label = current_value-'A';
-        if(left_value == '.' || right_value == '.'){
-            if(left_value == '.') tree[i]->left = NULL;
-            if(right_value == '.') tree[i]->right = NULL;
-            continue;
-        }
-        tree[i]->left = tree[left_value-'A'];
-        tree[i]->right = tree[right_value-'A'];
+        int index = current_value - 'A';
+        tree[index]->label = current_value-'A';
+        if(left_value != '.') tree[index]->left = tree[left_value-'A'];
+        else tree[index]->left = NULL;
+        if(right_value != '.') tree[index]->right = tree[right_value-'A'];
+        else tree[index]->right = NULL;
     }
-    cout << tree[0]->label << " " << tree[0]->left->label << " " << tree[0]->right->label;
+    preorder(0);
+    cout << endl;
+    inorder(0);
+    cout << endl;
+    postorder(0);
+
 }
