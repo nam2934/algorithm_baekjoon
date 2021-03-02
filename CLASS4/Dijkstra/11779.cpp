@@ -1,6 +1,7 @@
 #include<iostream>
 #include<vector>
 #include<queue>
+#include<climits>
 #include<stack>
 
 using namespace std;
@@ -10,24 +11,11 @@ vector<int> result;
 
 int vertex_num, edge_num, start_v, end_v;
 
-int main(){
-    ios_base::sync_with_stdio();
-    cin.tie(NULL);
-    cin >> vertex_num >> edge_num;
-
-    for(int i=0; i<edge_num; i++){
-        int v1, v2, w;
-        cin >> v1 >> v2 >> w;
-        adj[v1].push_back(make_pair(v2, w));
-    }
-    cin >> start_v >> end_v;
-    result = vector<int>(vertex_num+1);
-
-    vector<int> dist(vertex_num+1, 987654321);
-    
+vector<int> dijkstra(int start){
+    vector<int> dist(vertex_num+1, INT_MAX);
     priority_queue<pair<int,int> > pq;
-    pq.push(make_pair(0, start_v));
-
+    pq.push(make_pair(0, start));
+    dist[start] = 0;
     while(!pq.empty()){
         int here = pq.top().second;
         int distance = -pq.top().first;
@@ -45,7 +33,22 @@ int main(){
             }
         }
     }
+    return dist;
+}
 
+int main(){
+    ios_base::sync_with_stdio(0);
+    cin.tie(NULL);
+    cin >> vertex_num >> edge_num;
+
+    for(int i=0; i<edge_num; i++){
+        int v1, v2, w;
+        cin >> v1 >> v2 >> w;
+        adj[v1].push_back(make_pair(v2, w));
+    }
+    cin >> start_v >> end_v;
+    result = vector<int>(vertex_num+1);
+    vector<int> dist = dijkstra(start_v);
     cout << dist[end_v] << endl;
     int index = end_v;
     stack<int> s;
