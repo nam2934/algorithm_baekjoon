@@ -7,7 +7,7 @@ using namespace std;
 
 vector<pair<long, long> > board;
 vector<vector<bool> > wire;
-vector<pair<int, double> > adj[1001];
+vector<pair<int, pair<int, int> > > adj[1001];
 
 int N,W;
 double M;
@@ -25,8 +25,8 @@ void make_graph(){
             long pow_result = (nx-x)*(nx-x)+(ny-y)*(ny-y);
             double w = sqrt(pow_result);
             if(M >= w){
-                if(wire[i][j]) adj[i].push_back(make_pair(j, 0.0));
-                else adj[i].push_back(make_pair(j, w));
+                if(wire[i][j]) adj[i].push_back(make_pair(j, make_pair(0, 0)));
+                else adj[i].push_back(make_pair(j, make_pair(ny-y, nx-x)));
             }
         }
     }
@@ -44,7 +44,8 @@ vector<double> Dijkstra(int src){
         if(dist[here] < cur_dist) continue;
         for(int i=0; i<adj[here].size(); i++){
             int there = adj[here][i].first;
-            double next_dist = cur_dist + adj[here][i].second;
+            double next_dist = sqrt(adj[here][i].second.first*adj[here][i].second.first + adj[here][i].second.second*adj[here][i].second.second);
+            next_dist = cur_dist + next_dist;
             if(dist[there] > next_dist){
                 dist[there] = next_dist;
                 pq.push(make_pair(-next_dist, there));
