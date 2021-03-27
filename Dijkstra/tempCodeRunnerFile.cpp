@@ -8,7 +8,7 @@ vector<pair<int, int> > adj[10001];
 const int INF = 1987654321;
 int computer;
 vector<int> Dijkstra(int start){
-    vector<int> dist(computer+1, INF);
+    vector<int> dist(computer+1);
     priority_queue<pair<int, int> > pq;
     pq.push(make_pair(0, start));
     dist[start] = 0;
