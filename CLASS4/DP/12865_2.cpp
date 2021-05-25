@@ -5,7 +5,7 @@
 
 using namespace std;
 
-int cache[101][100001];
+int cache[100001];
 vector<int> weight;
 vector<int> value;
 int N, K;
@@ -21,10 +21,9 @@ int main(){
         cin >> weight[i] >> value[i];
     }
     for(int i=1; i<=N; i++){
-        for(int j=1; j<=K; j++){
-            if(j >= weight[i]) cache[i][j] = max(cache[i-1][j], cache[i-1][j-weight[i]]+value[i]);
-            else cache[i][j] = cache[i-1][j];
+        for(int j=K; j>=weight[i]; j--){
+            cache[j] = max(cache[j], cache[j-weight[i]] + value[i]);
         }
     }
-    cout << cache[N][K] << "\n";
+    cout << cache[K] << "\n";
 }
