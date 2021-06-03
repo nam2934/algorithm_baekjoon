@@ -1,28 +1,24 @@
 #include<iostream>
-#include<cstring>
 #include<cmath>
-using namespace std;
+#include<cstring>
 
+using namespace std;
 const int MAX = 1000001;
 int cache[MAX];
 
 int DP(int n){
-    cache[1] = 0;
-	for(int i=2; i<=n; i++){
-        cache[i] = cache[i-1]+1;
-        if(i % 2 == 0){
-            cache[i] = min(cache[i], cache[i/2]+1);
-        }
-        if(i % 3 == 0){
-            cache[i] = min(cache[i], cache[i/3]+1);
-        }
-    }
-    return cache[n];
+    if(n == 1) return 0;
+    int& ret = cache[n];
+    if(ret != MAX) return ret;
+    if(n % 3 == 0) ret = min(ret, DP(n/3)+1);
+    if(n % 2 == 0) ret = min(ret, DP(n/2)+1);
+    ret = min(ret, DP(n-1)+1);
+    return ret;
 }
 
 int main(){
-	int n;
-	cin >> n;
-	memset(cache, -1, sizeof(cache));
-	cout << DP(n);
+    int N;
+    cin >> N;
+    for(int i=0; i<MAX; i++) cache[i] = MAX;
+    cout << DP(N);
 }
