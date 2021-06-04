@@ -4,10 +4,7 @@
 #include<cstring>
 using namespace std;
 
-int cache[501][501];
-int sum[501];
-int K;
-int file_arr[501];
+int file_arr[501], cache[501][501], sum[501], K;
 const int MAX = 987654321;
 
 int DP(int left, int right){
