@@ -7,7 +7,7 @@ int pal[2001][2001];
 vector<int> num;
 
 bool is_pal(int S, int E){
-    if(S > E) return true;
+    if(S >= E) return true;
     int& ret = pal[S][E];
     if(ret == -1){
         ret = (is_pal(S+1, E-1) && (num[S] == num[E]));
