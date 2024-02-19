@@ -5,22 +5,17 @@
 using namespace std;
 
 int N;
-int dx[2] = {-1, 1};
+int dx[2] = {0, 1};
 int dy[2] = {1, 1};
 vector<vector<int> > board;
 int cache[501][501];
 
 int DP(int y, int x){
-    if(y == N) return 0;
+    if(x == N || y == N) return 0;
     int& ret = cache[y][x];
     if(ret != -1) return ret;
-    for(int i=0; i<2; i++){
-        int ny = y+dy[i];
-        int nx = x+dx[i];
-        if(nx >=0 && board[ny][nx] != -1){
-            ret = max(ret, DP(ny, nx) + board[y][x]);
-        }
-    }
+    ret = max(DP(y+1, x), DP(y+1, x+1)) + board[y][x];
+    
     return ret;
 }
 
