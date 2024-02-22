@@ -1,29 +1,30 @@
 #include<iostream>
+#include<vector>
 #include<cstring>
 
 using namespace std;
 
-long long cache[21][101];
-int number[101];
-int result_num, N;
+long long cache[101][21];
+long long arr[101];
 
-long long DP(int sum, int n){
-    if(n == N-2){
-        if(result_num == sum) return 1;
-        else return 0;
-    }
-    long long& ret = cache[sum][n];
+long long DP(long long a, long long b){
+    if(b > 20 || b < 0) return 0;
+    if(a == 1 && b == arr[1]) return 1;
+    if(a == 1) return 0;
+    long long& ret = cache[a][b];
     if(ret != -1) return ret;
-    ret = 0;
-    if(sum - number[n+1] >= 0) ret += DP(sum-number[n+1], n+1);
-    if(sum + number[n+1] <= 20) ret += DP(sum+number[n+1], n+1);
+    ret = DP(a-1, b+arr[a]) + DP(a-1, b-arr[a]);
     return ret;
 }
 
 int main(){
+    long long N;
     cin >> N;
     memset(cache, -1, sizeof(cache));
-    for(int i=0; i<N; i++) cin >> number[i];
-    result_num = number[N-1];
-    cout << DP(number[0], 0);
+    for(int i=1; i<N; i++){
+        cin >> arr[i];
+    }
+    long long n;
+    cin >> n;
+    cout << DP(N-1, n);
 }
